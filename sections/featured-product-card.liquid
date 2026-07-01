@@ -5,6 +5,10 @@
   <div class="mx-auto max-w-[278px]">
     {% if section.settings.product != blank %}
       {% render 'product-card', product: section.settings.product %}
+    {% elsif request.design_mode %}
+      <div class="bg-white p-5 text-sm leading-6 text-neutral-700">
+        Select a product in this section to preview the product card.
+      </div>
     {% endif %}
   </div>
 </section>

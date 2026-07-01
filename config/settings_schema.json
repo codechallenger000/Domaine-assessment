@@ -1,6 +1,11 @@
 [
   {
     "name": "Theme settings",
-    "settings": []
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Product card options are managed from the featured product card section."
+      }
+    ]
   }
 ]

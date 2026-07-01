@@ -24,7 +24,7 @@ For Shopify theme work:
 ```bash
 npm install
 npm run build:css
-npm run dev -- --store=your-store.myshopify.com
+npm run dev -- --store=domaine-fxqdva6a.myshopify.com
 ```
 
 The Shopify command needs a real development store. Without the `--store` value, Shopify CLI stops before it can serve the theme.
