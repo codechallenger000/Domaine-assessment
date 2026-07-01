@@ -58,6 +58,8 @@ async function main() {
   assert(liquid.includes("compare_at_price"), "compare-at pricing is missing");
   assert(liquid.includes("data-swatch"), "variant swatches are missing");
   assert(liquid.includes("data-secondary-image"), "secondary image data is missing");
+  assert(liquid.includes("use_asset_swatches"), "single-variant product asset swatches are missing");
+  assert(liquid.includes("'green.png' | asset_url"), "single-variant product does not use supplied product assets");
   assert(script.includes("aria-pressed"), "swatches do not update pressed state");
   assert(script.includes("data-compare-price-output"), "price update behavior is missing");
   assert(script.includes("variantComparePrice"), "swatch compare-price behavior is missing");

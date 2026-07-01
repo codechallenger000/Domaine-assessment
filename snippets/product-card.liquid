@@ -3,6 +3,12 @@
   assign featured_media = selected_variant.featured_media | default: product.featured_media
   assign secondary_media = product.media[1] | default: featured_media
   assign is_on_sale = false
+  assign use_asset_swatches = product.has_only_default_variant
+  assign display_vendor = product.vendor
+
+  if display_vendor == blank or display_vendor == shop.name
+    assign display_vendor = 'Good Brand Company'
+  endif
 
   if selected_variant.compare_at_price > selected_variant.price
     assign is_on_sale = true
@@ -15,7 +21,22 @@
       {{ 'products.product.on_sale' | t | default: 'On Sale!' }}
     </span>
 
-    {% if featured_media %}
+    {% if use_asset_swatches %}
+      <img
+        class="product-card__image product-card__image--primary"
+        src="{{ 'green.png' | asset_url }}"
+        alt="{{ product.title | escape }} in green"
+        loading="lazy"
+        data-primary-image
+      >
+      <img
+        class="product-card__image product-card__image--secondary"
+        src="{{ 'green-secondary.png' | asset_url }}"
+        alt=""
+        loading="lazy"
+        data-secondary-image
+      >
+    {% elsif featured_media %}
       <img
         class="product-card__image product-card__image--primary"
         src="{{ featured_media | image_url: width: 900 }}"
@@ -52,8 +73,8 @@
 
   <div class="product-card__body">
     <div>
-      {% if product.vendor != blank %}
-        <p class="product-card__vendor">{{ product.vendor }}</p>
+      {% if display_vendor != blank %}
+        <p class="product-card__vendor">{{ display_vendor }}</p>
       {% endif %}
       <h2 class="product-card__title">
         <a href="{{ product.url }}">{{ product.title }}</a>
@@ -68,7 +89,35 @@
       <span data-price-output>{{ selected_variant.price | money }}</span>
     </div>
 
-    {% unless product.has_only_default_variant %}
+    {% if use_asset_swatches %}
+      <fieldset class="product-card__swatches" aria-label="Choose color">
+        <legend class="sr-only">Color</legend>
+        {% liquid
+          assign colors = 'Orange,Green,Blue,Yellow,Pink,Navy' | split: ','
+          assign swatches = '#f45a1b,#7daa47,#087cc4,#f3d867,#f6a3cf,#10164b' | split: ','
+        %}
+        {% for color in colors %}
+          {% liquid
+            assign color_handle = color | downcase
+            assign primary_image = color_handle | append: '.png'
+            assign secondary_image = color_handle | append: '-secondary.png'
+          %}
+          <button
+            class="product-card__swatch {% if color == 'Green' %}is-selected{% endif %}"
+            type="button"
+            aria-label="{{ color }}"
+            aria-pressed="{% if color == 'Green' %}true{% else %}false{% endif %}"
+            data-swatch
+            data-color="{{ color }}"
+            data-variant-price="{{ selected_variant.price | money }}"
+            data-variant-compare-price="{% if is_on_sale %}{{ selected_variant.compare_at_price | money }}{% endif %}"
+            data-primary-image="{{ primary_image | asset_url }}"
+            data-secondary-image="{{ secondary_image | asset_url }}"
+            style="--swatch-color: {{ swatches[forloop.index0] }}"
+          ></button>
+        {% endfor %}
+      </fieldset>
+    {% else %}
       <fieldset class="product-card__swatches" aria-label="Choose color">
         <legend class="sr-only">Color</legend>
         {% for variant in product.variants %}
@@ -125,6 +174,6 @@
           ></button>
         {% endfor %}
       </fieldset>
-    {% endunless %}
+    {% endif %}
   </div>
 </article>
