@@ -2,7 +2,9 @@
   "sections": {
     "featured_product_card": {
       "type": "featured-product-card",
-      "settings": {}
+      "settings": {
+        "product": "plain-t-shirt"
+      }
     }
   },
   "order": [
