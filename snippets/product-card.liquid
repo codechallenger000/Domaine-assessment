@@ -1,0 +1,130 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign featured_media = selected_variant.featured_media | default: product.featured_media
+  assign secondary_media = product.media[1] | default: featured_media
+  assign is_on_sale = false
+
+  if selected_variant.compare_at_price > selected_variant.price
+    assign is_on_sale = true
+  endif
+%}
+
+<article class="product-card group" data-product-card>
+  <a class="product-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    <span class="product-card__badge" data-sale-badge {% unless is_on_sale %}hidden{% endunless %}>
+      {{ 'products.product.on_sale' | t | default: 'On Sale!' }}
+    </span>
+
+    {% if featured_media %}
+      <img
+        class="product-card__image product-card__image--primary"
+        src="{{ featured_media | image_url: width: 900 }}"
+        srcset="
+          {{ featured_media | image_url: width: 360 }} 360w,
+          {{ featured_media | image_url: width: 540 }} 540w,
+          {{ featured_media | image_url: width: 720 }} 720w,
+          {{ featured_media | image_url: width: 900 }} 900w
+        "
+        sizes="(min-width: 990px) 320px, 90vw"
+        alt="{{ featured_media.alt | default: product.title | escape }}"
+        loading="lazy"
+        data-primary-image
+      >
+    {% endif %}
+
+    {% if secondary_media %}
+      <img
+        class="product-card__image product-card__image--secondary"
+        src="{{ secondary_media | image_url: width: 900 }}"
+        srcset="
+          {{ secondary_media | image_url: width: 360 }} 360w,
+          {{ secondary_media | image_url: width: 540 }} 540w,
+          {{ secondary_media | image_url: width: 720 }} 720w,
+          {{ secondary_media | image_url: width: 900 }} 900w
+        "
+        sizes="(min-width: 990px) 320px, 90vw"
+        alt=""
+        loading="lazy"
+        data-secondary-image
+      >
+    {% endif %}
+  </a>
+
+  <div class="product-card__body">
+    <div>
+      {% if product.vendor != blank %}
+        <p class="product-card__vendor">{{ product.vendor }}</p>
+      {% endif %}
+      <h2 class="product-card__title">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h2>
+    </div>
+
+    <div class="product-card__price {% if is_on_sale %}is-sale{% endif %}" data-price-wrap>
+      <span class="sr-only">{{ 'products.product.price.sale_price' | t | default: 'Price' }}</span>
+      <span class="product-card__compare" data-compare-price-output>
+        {% if is_on_sale %}{{ selected_variant.compare_at_price | money }}{% endif %}
+      </span>
+      <span data-price-output>{{ selected_variant.price | money }}</span>
+    </div>
+
+    {% unless product.has_only_default_variant %}
+      <fieldset class="product-card__swatches" aria-label="Choose color">
+        <legend class="sr-only">Color</legend>
+        {% for variant in product.variants %}
+          {% liquid
+            assign color_name = variant.option1
+            assign variant_media = variant.featured_media | default: featured_media
+            assign swatch_key = color_name | downcase | strip
+            assign swatch_color = '#d4d4d4'
+            assign variant_on_sale = false
+
+            case swatch_key
+              when 'black', 'ink'
+                assign swatch_color = '#252a32'
+              when 'blue', 'navy'
+                assign swatch_color = '#27364f'
+              when 'brown', 'espresso'
+                assign swatch_color = '#6a4b35'
+              when 'cream', 'ivory'
+                assign swatch_color = '#eee7dc'
+              when 'green', 'olive'
+                assign swatch_color = '#5f6644'
+              when 'grey', 'gray'
+                assign swatch_color = '#8d8d8d'
+              when 'red'
+                assign swatch_color = '#9f2d2f'
+              when 'orange'
+                assign swatch_color = '#f45a1b'
+              when 'pink'
+                assign swatch_color = '#f6a3cf'
+              when 'yellow'
+                assign swatch_color = '#f3d867'
+              when 'sand', 'tan', 'beige'
+                assign swatch_color = '#d8c4a5'
+              when 'white'
+                assign swatch_color = '#f8f7f4'
+            endcase
+
+            if variant.compare_at_price > variant.price
+              assign variant_on_sale = true
+            endif
+          %}
+          <button
+            class="product-card__swatch {% if variant.id == selected_variant.id %}is-selected{% endif %}"
+            type="button"
+            aria-label="{{ color_name | escape }}"
+            aria-pressed="{% if variant.id == selected_variant.id %}true{% else %}false{% endif %}"
+            data-swatch
+            data-color="{{ color_name | escape }}"
+            data-variant-price="{{ variant.price | money }}"
+            data-variant-compare-price="{% if variant_on_sale %}{{ variant.compare_at_price | money }}{% endif %}"
+            data-primary-image="{{ variant_media | image_url: width: 900 }}"
+            data-secondary-image="{{ secondary_media | image_url: width: 900 }}"
+            style="--swatch-color: {{ swatch_color }}"
+          ></button>
+        {% endfor %}
+      </fieldset>
+    {% endunless %}
+  </div>
+</article>

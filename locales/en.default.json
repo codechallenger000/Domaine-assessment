@@ -1,0 +1,10 @@
+{
+  "products": {
+    "product": {
+      "on_sale": "On Sale!",
+      "price": {
+        "sale_price": "Sale price"
+      }
+    }
+  }
+}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Domaine Product Card Preview</title>
+    <link rel="stylesheet" href="./assets/theme.css">
+  </head>
+  <body>
+    <main class="min-h-screen bg-neutral-900 px-5 py-20 text-neutral-950">
+      <section class="mx-auto max-w-[278px]">
+        <article
+          class="product-card group"
+          data-product-card
+          aria-labelledby="product-title"
+        >
+          <a class="product-card__media" href="#" aria-label="View Plain T-shirt">
+            <span class="product-card__badge" data-sale-badge>On Sale!</span>
+            <img
+              class="product-card__image product-card__image--primary"
+              src="./assets/green.png"
+              alt="Plain T-shirt in green"
+              data-primary-image
+            >
+            <img
+              class="product-card__image product-card__image--secondary"
+              src="./assets/green-secondary.png"
+              alt=""
+              aria-hidden="true"
+              data-secondary-image
+            >
+          </a>
+
+          <div class="product-card__body">
+            <fieldset class="product-card__swatches" aria-label="Choose color">
+              <legend class="sr-only">Color</legend>
+              <button
+                class="product-card__swatch"
+                type="button"
+                aria-label="Orange"
+                aria-pressed="false"
+                data-swatch
+                data-color="Orange"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/orange.png"
+                data-secondary-image="./assets/orange-secondary.png"
+                style="--swatch-color: #f45a1b"
+              ></button>
+              <button
+                class="product-card__swatch is-selected"
+                type="button"
+                aria-label="Green"
+                aria-pressed="true"
+                data-swatch
+                data-color="Green"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/green.png"
+                data-secondary-image="./assets/green-secondary.png"
+                style="--swatch-color: #7daa47"
+              ></button>
+              <button
+                class="product-card__swatch"
+                type="button"
+                aria-label="Blue"
+                aria-pressed="false"
+                data-swatch
+                data-color="Blue"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/blue.png"
+                data-secondary-image="./assets/blue-secondary.png"
+                style="--swatch-color: #087cc4"
+              ></button>
+              <button
+                class="product-card__swatch"
+                type="button"
+                aria-label="Yellow"
+                aria-pressed="false"
+                data-swatch
+                data-color="Yellow"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/yellow.png"
+                data-secondary-image="./assets/yellow-secondary.png"
+                style="--swatch-color: #f3d867"
+              ></button>
+              <button
+                class="product-card__swatch"
+                type="button"
+                aria-label="Pink"
+                aria-pressed="false"
+                data-swatch
+                data-color="Pink"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/pink.png"
+                data-secondary-image="./assets/pink-secondary.png"
+                style="--swatch-color: #f6a3cf"
+              ></button>
+              <button
+                class="product-card__swatch"
+                type="button"
+                aria-label="Navy"
+                aria-pressed="false"
+                data-swatch
+                data-color="Navy"
+                data-variant-price="$20.00"
+                data-variant-compare-price="$29.50"
+                data-primary-image="./assets/navy.png"
+                data-secondary-image="./assets/navy-secondary.png"
+                style="--swatch-color: #10164b"
+              ></button>
+            </fieldset>
+
+            <div>
+              <p class="product-card__vendor">Good Brand Company</p>
+              <h2 id="product-title" class="product-card__title">
+                <a href="#">Plain T-shirt</a>
+              </h2>
+            </div>
+
+            <div class="product-card__price" data-price-wrap>
+              <span class="sr-only">Sale price</span>
+              <span class="product-card__compare" data-compare-price-output>$29.50</span>
+              <span data-price-output>$20.00</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./assets/product-card.js" defer></script>
+  </body>
+</html>

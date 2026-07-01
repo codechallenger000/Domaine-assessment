@@ -1,0 +1,28 @@
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-card.js' | asset_url }}" defer></script>
+
+<section class="bg-neutral-900 px-5 py-20 text-neutral-950">
+  <div class="mx-auto max-w-[278px]">
+    {% if section.settings.product != blank %}
+      {% render 'product-card', product: section.settings.product %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product card",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product card"
+    }
+  ]
+}
+{% endschema %}

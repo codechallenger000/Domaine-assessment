@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .product-card {
+    @apply w-[278px] bg-white p-5 text-left;
+  }
+
+  .product-card__media {
+    @apply relative block aspect-square overflow-hidden rounded-md border border-neutral-200 bg-white;
+  }
+
+  .product-card__badge {
+    @apply absolute left-4 top-4 z-10 rounded-full border border-red-500 bg-white px-3 py-1 text-[11px] font-semibold leading-none text-red-500;
+  }
+
+  .product-card__image {
+    @apply absolute inset-0 h-full w-full object-contain transition duration-300 ease-out;
+  }
+
+  .product-card__image--secondary {
+    @apply opacity-0;
+  }
+
+  .product-card:hover .product-card__image--primary {
+    @apply scale-105 opacity-0;
+  }
+
+  .product-card:hover .product-card__image--secondary {
+    @apply scale-105 opacity-100;
+  }
+
+  .product-card__body {
+    @apply pt-3;
+  }
+
+  .product-card__vendor {
+    @apply mt-3 text-[11px] font-semibold leading-4 text-neutral-500;
+  }
+
+  .product-card__title {
+    @apply text-[13px] font-semibold leading-5 text-blue-700;
+  }
+
+  .product-card__price {
+    @apply mt-1 flex items-center gap-2 text-[11px] leading-4 text-neutral-950;
+  }
+
+  .product-card__price.is-sale {
+    @apply text-red-500;
+  }
+
+  .product-card__compare {
+    @apply text-neutral-700 line-through;
+  }
+
+  .product-card__swatches {
+    @apply flex gap-2;
+  }
+
+  .product-card__swatch {
+    @apply h-4 w-4 rounded-full border border-white ring-1 ring-transparent ring-offset-1 transition;
+    background: var(--swatch-color);
+  }
+
+  .product-card__swatch:hover,
+  .product-card__swatch.is-selected {
+    @apply ring-blue-500;
+  }
+}
