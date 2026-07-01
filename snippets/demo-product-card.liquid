@@ -1,0 +1,65 @@
+<article
+  class="product-card group"
+  data-product-card
+  aria-labelledby="demo-product-title"
+>
+  <a class="product-card__media" href="#" aria-label="View Plain T-shirt">
+    <span class="product-card__badge" data-sale-badge>On Sale!</span>
+    <img
+      class="product-card__image product-card__image--primary"
+      src="{{ 'green.png' | asset_url }}"
+      alt="Plain T-shirt in green"
+      data-primary-image
+    >
+    <img
+      class="product-card__image product-card__image--secondary"
+      src="{{ 'green-secondary.png' | asset_url }}"
+      alt=""
+      aria-hidden="true"
+      data-secondary-image
+    >
+  </a>
+
+  <div class="product-card__body">
+    <fieldset class="product-card__swatches" aria-label="Choose color">
+      <legend class="sr-only">Color</legend>
+      {% liquid
+        assign colors = 'Orange,Green,Blue,Yellow,Pink,Navy' | split: ','
+        assign swatches = '#f45a1b,#7daa47,#087cc4,#f3d867,#f6a3cf,#10164b' | split: ','
+      %}
+      {% for color in colors %}
+        {% liquid
+          assign color_handle = color | downcase
+          assign primary_image = color_handle | append: '.png'
+          assign secondary_image = color_handle | append: '-secondary.png'
+        %}
+        <button
+          class="product-card__swatch {% if color == 'Green' %}is-selected{% endif %}"
+          type="button"
+          aria-label="{{ color }}"
+          aria-pressed="{% if color == 'Green' %}true{% else %}false{% endif %}"
+          data-swatch
+          data-color="{{ color }}"
+          data-variant-price="$20.00"
+          data-variant-compare-price="$29.50"
+          data-primary-image="{{ primary_image | asset_url }}"
+          data-secondary-image="{{ secondary_image | asset_url }}"
+          style="--swatch-color: {{ swatches[forloop.index0] }}"
+        ></button>
+      {% endfor %}
+    </fieldset>
+
+    <div>
+      <p class="product-card__vendor">Good Brand Company</p>
+      <h2 id="demo-product-title" class="product-card__title">
+        <a href="#">Plain T-shirt</a>
+      </h2>
+    </div>
+
+    <div class="product-card__price is-sale" data-price-wrap>
+      <span class="sr-only">Sale price</span>
+      <span class="product-card__compare" data-compare-price-output>$29.50</span>
+      <span data-price-output>$20.00</span>
+    </div>
+  </div>
+</article>

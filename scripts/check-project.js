@@ -6,6 +6,7 @@ const { createServer } = require("./preview-server");
 const root = path.resolve(__dirname, "..");
 const requiredFiles = [
   "snippets/product-card.liquid",
+  "snippets/demo-product-card.liquid",
   "sections/featured-product-card.liquid",
   "assets/product-card.js",
   "assets/theme.css",
@@ -46,11 +47,14 @@ async function request(pathname, port) {
 
 async function main() {
   const liquid = read("snippets/product-card.liquid");
+  const demoLiquid = read("snippets/demo-product-card.liquid");
   const script = read("assets/product-card.js");
   const css = read("assets/theme.css");
   const preview = read("index.html");
 
   assert(liquid.includes("data-sale-badge"), "sale badge is not wired in Liquid");
+  assert(demoLiquid.includes("green.png"), "demo card is not using supplied assets");
+  assert(demoLiquid.includes("data-variant-compare-price"), "demo card swatch pricing is missing");
   assert(liquid.includes("compare_at_price"), "compare-at pricing is missing");
   assert(liquid.includes("data-swatch"), "variant swatches are missing");
   assert(liquid.includes("data-secondary-image"), "secondary image data is missing");
